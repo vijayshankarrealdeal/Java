@@ -9,15 +9,12 @@
 
     <Button
         android:id="@+id/LoginButton"
-        android:layout_width="240dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="679dp"
         android:layout_marginBottom="32dp"
+        android:background="#0D0D0D"
         android:text="Login"
-        android:bottomRightRadius="10dp"
-        android:bottomLeftRadius="10dp"
-        android:topLeftRadius="10dp"
-        android:topRightRadius="10dp"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "416027198973",
+    "project_id": "women-e598c",
+    "storage_bucket": "women-e598c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416027198973:android:9ab3328c0ba7273f5bc594",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416027198973-3a9t9vre31o5cdgcqcp2m2nev384fsuc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "e59f6377c12964cd6d002af4a8d2e575e7173af5"
+          }
+        },
+        {
+          "client_id": "416027198973-6egd83ijlvr4ivtkgfkkeqcem1hfhvbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyEkKp7mYl1-r60RUOeIf1rsYg4l0mIMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416027198973-6egd83ijlvr4ivtkgfkkeqcem1hfhvbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
