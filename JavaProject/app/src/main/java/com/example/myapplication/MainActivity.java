@@ -16,14 +16,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.*;
 
 
 public class MainActivity extends AppCompatActivity{
     LocationManager locationManager;
     Button logout;
     LocationListener locationListener;
+    Map<String,Object> userData = new HashMap<>();
+    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore db ;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -42,11 +53,30 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         logout = findViewById(R.id.Logout);
+        db = FirebaseFirestore.getInstance();
         locationListener  = new LocationListener()
         {
 
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                final String uid = user.getUid();
+                userData.put("email",user.getEmail());
+                userData.put("uid",user.getUid());
+                userData.put("location",location.toString());
+      DocumentReference documentReference =  db.collection("Users").document(uid);
+      documentReference.set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                        {
+                            Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
                 Log.i("Location",location.toString());
             }
 

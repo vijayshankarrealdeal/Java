@@ -12,29 +12,41 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.util.Calendar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.text.SimpleDateFormat;
 public class Register extends AppCompatActivity {
     EditText emailAddress,passwordEnter,confirmPassword;
     Button signUP;
     TextView mSignUp;
+    TextView aadhaC;
     FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
-
+    Map<String,Object> userData = new HashMap<>();
+    FirebaseFirestore db ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        String currentDateandTime = sdf.format(new Date());
+
         emailAddress = findViewById(R.id.emailRegister);
         passwordEnter = findViewById(R.id.passwordRegister);
         confirmPassword = findViewById(R.id.confrimPasswordReg);
         signUP = findViewById(R.id.SignUpREg);
         mSignUp = findViewById(R.id.backTOLogin);
+        aadhaC = findViewById(R.id.aadharC);
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBarReg);
 
         signUP.setOnClickListener(new View.OnClickListener() {
@@ -43,9 +55,15 @@ public class Register extends AppCompatActivity {
                 String email = emailAddress.getText().toString().trim();
                 String password = passwordEnter.getText().toString();
                 String confirmPas = confirmPassword.getText().toString();
+                String aadha = aadhaC.getText().toString();
                 if (TextUtils.isEmpty(email))
                 {
                     emailAddress.setError("Email is Required");
+                    return;
+                }
+                if (aadha.length() != 12||aadha.length()>12||aadha.length()<12)
+                {
+                    aadhaC.setError("Enter Your Correct Aadhaar Number");
                     return;
                 }
                 if (TextUtils.isEmpty(password))
@@ -70,6 +88,17 @@ public class Register extends AppCompatActivity {
                         if(task.isSuccessful())
                         {
                             Toast.makeText(Register.this,"UserCreate",Toast.LENGTH_SHORT).show();
+                            userData.put("Aadhaar",aadha);
+                            userData.put("DateCreated",currentDateandTime);
+                            userData.put("email",firebaseAuth.getCurrentUser().getEmail());
+                            userData.put("uid",firebaseAuth.getCurrentUser().getUid());
+                            DocumentReference documentReference =  db.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
+                            documentReference.set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    System.out.println(task.isComplete());
+                                }
+                            });
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }
                         else{
