@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,6 +27,7 @@ import java.util.Date;
 public class Login extends AppCompatActivity {
     EditText mEmail,mPassword;
     Button mLogin;
+    TextView helpButton;
     TextView mCreateAccount;
     ProgressBar progressBar;
     FirebaseAuth firebaseAu;
@@ -41,6 +43,7 @@ public class Login extends AppCompatActivity {
         mLogin = findViewById(R.id.loginButton);
         mCreateAccount = findViewById(R.id.changeToRegister);
         progressBar = findViewById(R.id.progressBarlogin);
+        helpButton = findViewById(R.id.forgetPass);
         firebaseAu = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         if(firebaseAu.getCurrentUser()!=null)
@@ -58,8 +61,7 @@ public class Login extends AppCompatActivity {
                     mEmail.setError("Email is Required");
                     return;
                 }
-                if (TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password is Required");
+                if (TextUtils.isEmpty(password)) {                    mPassword.setError("Password is Required");
                     return;
                 }
                 if (password.length() < 6) {
@@ -98,6 +100,11 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Register.class));
             }
         });
-
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ForgetPassword.class));
+            }
+        });
         }
     }
