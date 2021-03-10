@@ -16,9 +16,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,9 +34,12 @@ public class MainActivity extends AppCompatActivity{
     LocationManager locationManager;
     Button logout;
     LocationListener locationListener;
+    TextView verifyMessage;
+    Button verifyEmail;
     Map<String,Object> userData = new HashMap<>();
     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db ;
+    FirebaseAuth auth;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -51,9 +56,17 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        verifyMessage = findViewById(R.id.verifyTextView);
+        verifyEmail = findViewById(R.id.buttonVerify);
+        auth = FirebaseAuth.getInstance();
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         logout = findViewById(R.id.Logout);
         db = FirebaseFirestore.getInstance();
+
+
+
+
+
         locationListener  = new LocationListener()
         {
 
@@ -102,6 +115,25 @@ public class MainActivity extends AppCompatActivity{
         }else{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
         }
+        if(!auth.getCurrentUser().isEmailVerified())
+        {
+            verifyEmail.setVisibility(View.VISIBLE);
+            verifyMessage.setVisibility(View.VISIBLE);
+
+        }
+        verifyEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                   Toast.makeText(MainActivity.this,"Verification Send",Toast.LENGTH_SHORT).show();
+                        verifyEmail.setVisibility(View.GONE);
+                        verifyMessage.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
