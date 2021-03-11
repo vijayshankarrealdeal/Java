@@ -57,7 +57,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
+        <at.markushi.ui.CircleButton
+            android:layout_width="172dp"
+            android:layout_height="152dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="124dp"
+            android:layout_marginEnd="16dp"
+            android:src="?android:attr/listChoiceIndicatorMultiple"
+            app:cb_color="#F44336"
+            app:cb_pressedRingWidth="8dip" />
+
+    </FrameLayout>
     <Button
         android:id="@+id/buttonVerify"
         android:layout_width="wrap_content"
