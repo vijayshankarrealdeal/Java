@@ -170,13 +170,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(menuItem.getItemId() == R.id.home)
+        if(menuItem.getItemId() == R.id.safteykit)
         {
-
+            startActivity(new Intent(getApplicationContext(),FragmentSecond.class));
         }
-        if(menuItem.getItemId() == R.id.home)
+        if(menuItem.getItemId() == R.id.fir)
         {
-
+            startActivity(new Intent(getApplicationContext(),FragmentSecond.class));
         }
 
         return true;
