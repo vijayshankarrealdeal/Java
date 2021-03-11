@@ -1,27 +1,17 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -31,7 +21,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,14 +29,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.*;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,MainFragment.onFragmentBtnSelected{
+public class MainActivity extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    ActionBarDrawerToggle actionBarDrawerToggle;
-    Toolbar toolBar;
-    NavigationView navigationView;
+
     LocationManager locationManager;
     Button logout;
     LocationListener locationListener;
@@ -75,16 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Drawer
-        toolBar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolBar);
-        drawerLayout = findViewById(R.id.drawer);
-        navigationView = findViewById(R.id.navigationView);
-        actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout,toolBar,R.string.open,R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        actionBarDrawerToggle.syncState();
-       // sosButton = findViewById(R.id.sosButton);
+
+        // sosButton = findViewById(R.id.sosButton);
         verifyMessage = findViewById(R.id.verifyTextView);
         verifyEmail = findViewById(R.id.buttonVerify);
         auth = FirebaseAuth.getInstance();
@@ -92,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         logout = findViewById(R.id.Logout);
         db = FirebaseFirestore.getInstance();
 
-        navigationView.setNavigationItemSelectedListener(this);
+
 
 
 
@@ -170,70 +146,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                startActivity(new Intent(getApplicationContext(),Login.class));
 //            }
 //        });
-    }
-
-    public FrameLayout getSosButton() {
-        sosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"I am Clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
-        return sosButton;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        drawerLayout.closeDrawer(GravityCompat.START);
-        if(menuItem.getItemId() == R.id.safteykit)
-        {
-            //load default fragment
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment,new MainFragment());
-            fragmentTransaction.commit();
-
-
-        }
-        if(menuItem.getItemId() == R.id.fir)
-        {
-            //load default fragment
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment,new FragmentSecond());
-            fragmentTransaction.commit();
-
-        }
-        if(menuItem.getItemId() == R.id.reportaaccount)
-        {
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.reportaaccount,new AccontReport());
-            fragmentTransaction.commit();
-        }
-        if(menuItem.getItemId() == R.id.useraccoutn)
-        {
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.useraccoutn,new Settings());
-            fragmentTransaction.commit();
-        }
-        if(menuItem.getItemId() == R.id.logout)
-        {
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.logout,new Logout());
-            fragmentTransaction.commit();
-        }
-
-        return true;
-    }
-
-    @Override
-    public void onButtonSelected() {
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container_fragment,new MainFragment());
-        fragmentTransaction.commit();
     }
 }
