@@ -62,14 +62,15 @@
         android:layout_height="match_parent" >
 
         <at.markushi.ui.CircleButton
-            android:layout_width="172dp"
-            android:layout_height="152dp"
+            android:id="@+id/sosButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="26dp"
             android:layout_marginTop="124dp"
             android:layout_marginEnd="16dp"
-            android:src="?android:attr/listChoiceIndicatorMultiple"
+            android:src="@drawable/component"
             app:cb_color="#F44336"
-            app:cb_pressedRingWidth="8dip" />
+            app:cb_pressedRingWidth="16dip" />
 
     </FrameLayout>
     <Button
