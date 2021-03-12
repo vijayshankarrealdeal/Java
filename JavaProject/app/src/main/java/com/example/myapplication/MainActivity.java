@@ -6,12 +6,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,8 +34,6 @@ import java.util.*;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
     LocationManager locationManager;
     Button logout;
     LocationListener locationListener;
@@ -58,11 +60,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Intilize the
+        BottomNavigationView bottomNavigationView  =findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),Dashboard.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        return true;
+                    case R.id.about:
+                        startActivity(new Intent(getApplicationContext(),About.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
 
 
-        // sosButton = findViewById(R.id.sosButton);
-        verifyMessage = findViewById(R.id.verifyTextView);
-        verifyEmail = findViewById(R.id.buttonVerify);
+
+
+
+
+
+
+
+        //sosButton = findViewById(R.id.sosButton);
+       verifyMessage = findViewById(R.id.verifyTextView);
+        verifyEmail = findViewById(R.id.verifyButtom);
         auth = FirebaseAuth.getInstance();
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         logout = findViewById(R.id.Logout);
@@ -139,12 +170,12 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getApplicationContext(),Login.class));
-//            }
-//        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(),Login.class));
+            }
+        });
     }
 }
