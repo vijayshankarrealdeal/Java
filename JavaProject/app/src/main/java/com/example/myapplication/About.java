@@ -6,17 +6,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class About extends AppCompatActivity {
-
+    FirebaseAuth auth;
+    TextView view;
+    TextView UserKaNaam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
-
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        view = findViewById(R.id.AboutTestr);
+        UserKaNaam = findViewById(R.id.userKaNaam);
+        view.setText(user.getEmail());
+        UserKaNaam.setText(user.getUid());
         BottomNavigationView bottomNavigationView  =findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
