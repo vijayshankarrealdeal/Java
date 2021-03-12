@@ -20,20 +20,8 @@
     <ListView
         android:id="@+id/VideoList"
         android:layout_width="match_parent"
-        android:layout_height="701dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="794dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="83dp"
-        android:layout_marginBottom="62dp" />
-
-    <Button
-        android:id="@+id/buttonHelli"
-        android:layout_width="213dp"
-        android:layout_height="156dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="194dp"
-        android:layout_marginBottom="712dp"
-        android:text="Button" />
+        android:layout_marginBottom="56dp" />
 
 </RelativeLayout>

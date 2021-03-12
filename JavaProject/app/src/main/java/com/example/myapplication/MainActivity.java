@@ -1,4 +1,5 @@
 package com.example.myapplication;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.*;
 
@@ -36,15 +39,19 @@ import java.util.*;
 public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
     Button logout;
+    Button emergency;
     LocationListener locationListener;
     TextView verifyMessage;
     Button verifyEmail;
     FrameLayout sosButton;
     Map<String,Object> userData = new HashMap<>();
+    Map<String,Object> emergencyModel = new HashMap<>();
     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db ;
     FirebaseAuth auth;
-    Timer t;
+    String locationXX = "";
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+    String currentDateandTime = sdf.format(new Date());
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -93,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //sosButton = findViewById(R.id.sosButton);
+        emergency = findViewById(R.id.sosEmergency);
        verifyMessage = findViewById(R.id.verifyTextView);
         verifyEmail = findViewById(R.id.verifyButtom);
         auth = FirebaseAuth.getInstance();
@@ -113,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 userData.put("email",user.getEmail());
                 userData.put("uid",user.getUid());
                 userData.put("location",location.toString().split(",")[0]);
+                locationXX = location.toString();
 
 
 
@@ -130,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-                Log.i("Location",location.toString());
+               // Log.i("Location",location.toString());
             }
 
             @Override
@@ -172,6 +181,29 @@ public class MainActivity extends AppCompatActivity {
                         verifyMessage.setVisibility(View.GONE);
                     }
                 });
+            }
+        });
+        emergencyModel.put("email",user.getEmail());
+        emergencyModel.put("gpsLast",locationXX.split(",")[0].toString());
+        emergencyModel.put("time",currentDateandTime.toString());
+
+        emergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("EmergencyRecord")
+                        .document(user.getUid()).collection("EmergencyCall").document(currentDateandTime)
+                .set(emergencyModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this,"Alert Send",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this,"Alert Failed"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

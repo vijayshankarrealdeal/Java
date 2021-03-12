@@ -59,5 +59,22 @@
         android:layout_marginBottom="697dp"
         android:text="Logout" />
 
+    <Button
+        android:id="@+id/sosEmergency"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="540dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="125dp"
+        android:background="@drawable/rounded_corners"
+
+        android:text="SOS"
+        android:textSize="40sp" />
+
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,49 +16,39 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class Dashboard extends AppCompatActivity {
     FirebaseFirestore cloudStore;
-    Button sossss ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-
-            sossss = findViewById(R.id.buttonHelli);
-
-            sossss.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cloudStore = FirebaseFirestore.getInstance();
-                    cloudStore.collection("adminContent").document("Videos")
-                            .collection("data")
-                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-                                System.out.println(document.getData());
-
-                            }
-
-                        }
-                    });
-                }
-            });
-
         ListView listView = (ListView) findViewById(R.id.VideoList);
-
         ArrayList<String> hello = new ArrayList<String>();
-        for(int i = 65;i<9001;i++)
-        { hello.add(Integer.toString(i));
+        for(int i = 0;i<100000;i++)
+        {
+            hello.add(Integer.toString(i));
         }
+//        cloudStore = FirebaseFirestore.getInstance();
+//        cloudStore.collection("adminContent").document("Videos")
+//                .collection("data").addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                for(DocumentSnapshot snapshot : value)
+//                {
+//                        hello.add(snapshot.getString("title"));
+//                }
+//            }
+//        });
         ArrayAdapter<String> haa = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item,hello);
-
+//        haa.notifyDataSetChanged();
         listView.setAdapter(haa);
 
 
