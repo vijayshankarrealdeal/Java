@@ -1,5 +1,5 @@
 package com.example.myapplication;
-
+import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db ;
     FirebaseAuth auth;
+    Timer t;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -111,7 +112,10 @@ public class MainActivity extends AppCompatActivity {
                 final String uid = user.getUid();
                 userData.put("email",user.getEmail());
                 userData.put("uid",user.getUid());
-                userData.put("location",location.toString());
+                userData.put("location",location.toString().split(",")[0]);
+
+
+
       DocumentReference documentReference =  db.collection("Users").document(uid);
       documentReference.set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
