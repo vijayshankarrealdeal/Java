@@ -1,6 +1,7 @@
 package com.example.myapplication;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.TimeUnit;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -12,9 +13,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -30,8 +29,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.*;
 
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
     String currentDateandTime = sdf.format(new Date());
-    Location location;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -68,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         //Intilize the
         BottomNavigationView bottomNavigationView  =findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -98,51 +98,59 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        //sosButton = findViewById(R.id.sosButton);
         emergency = findViewById(R.id.sosEmergency);
-       verifyMessage = findViewById(R.id.verifyTextView);
+        verifyMessage = findViewById(R.id.verifyTextView);
         verifyEmail = findViewById(R.id.verifyButtom);
         auth = FirebaseAuth.getInstance();
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         logout = findViewById(R.id.Logout);
         db = FirebaseFirestore.getInstance();
-
-
+        userData.put("email",user.getEmail());
+        userData.put("uid",user.getUid());
+        final String uid = user.getUid();
+        DocumentReference documentReference =  db.collection("Users").document(uid);
 
 
 
         locationListener  = new LocationListener()
         {
+            String previousLat = "";
+            String previousLong = "";
 
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                location = location;
-                final String uid = user.getUid();
-                userData.put("email",user.getEmail());
-                userData.put("uid",user.getUid());
-                userData.put("longitude",location.getLatitude());
-                userData.put("longitude",location.getLongitude());
-             //   userData.put("location",location.toString().split(",")[0]);
-
-
-
-
-      DocumentReference documentReference =  db.collection("Users").document(uid);
-      documentReference.set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                        {
-                            Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(MainActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                        }
+                    public void onSuccess(DocumentSnapshot snapshot) {
+                        previousLat  = snapshot.getString("latitude");
+                        previousLong = snapshot.getString("longitude");
                     }
                 });
-               // Log.i("Location",location.toString());
+                location = location;
+                DecimalFormat df = new DecimalFormat("#.###");
+                Double logitudeX = new Double(location.getLongitude()) ;
+                Double latitudeX = new Double(location.getLongitude()) ;
+                latitudeX = Double.valueOf(df.format(latitudeX));
+                logitudeX = Double.valueOf(df.format(logitudeX));
+                userData.put("longitude",logitudeX.toString());
+                userData.put("latitude",latitudeX.toString());
+                if(!previousLat.equals(latitudeX) && !previousLong.equals(logitudeX)||previousLong.isEmpty())
+                {
+                    documentReference.update(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful())
+                            {
+                                Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText(MainActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
+                }
+
             }
 
             @Override
@@ -160,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+
+
+
         //Ask for permission Logic
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             // Ask Permission
@@ -187,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         emergencyModel.put("email",user.getEmail());
-        emergencyModel.put("gpsLast",location);
+        emergencyModel.put("gpsLast","");
         emergencyModel.put("time",currentDateandTime.toString());
 
         emergency.setOnClickListener(new View.OnClickListener() {
@@ -217,4 +228,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

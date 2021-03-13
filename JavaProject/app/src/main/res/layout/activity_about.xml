@@ -4,26 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".About">
 
-
-    <TextView
-        android:id="@+id/userKaNaam"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/AboutTestr"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="31dp"
-        android:layout_marginBottom="710dp"
-        android:text=""
-        android:textSize="17dp" />
-
-    <TextView
-        android:id="@+id/AboutTestr"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="About"
-        android:textSize="17dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -35,5 +18,30 @@
         app:menu="@menu/menu_navigation"
         android:layout_alignParentBottom="true"
         />
+
+    <ImageView
+        android:background="@color/white"
+        android:id="@+id/showGraphImage"
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:layout_alignParentBottom="true"
+        android:fitsSystemWindows="true"
+
+
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:id="@+id/jkbdsjfdvshf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="167dp"
+        android:layout_marginTop="193dp"
+        android:layout_marginEnd="188dp"
+        android:layout_marginBottom="657dp"
+        android:text="TextView" />
 
 </RelativeLayout>
