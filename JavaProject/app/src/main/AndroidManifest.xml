@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".About"></activity>
+        <activity android:name=".VideoPage"></activity>
+        <activity android:name=".About" />
         <activity android:name=".Dashboard" />
         <activity android:name=".Logout" />
         <activity android:name=".Settings" />

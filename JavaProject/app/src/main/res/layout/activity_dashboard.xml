@@ -17,11 +17,17 @@
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation" />
 
-    <ListView
-        android:id="@+id/VideoList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyelcwithFirestore"
         android:layout_width="match_parent"
-        android:layout_height="794dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="56dp" />
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/DataLoadingIndicator"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>
