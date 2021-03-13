@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db ;
     FirebaseAuth auth;
-    String locationXX = "";
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
     String currentDateandTime = sdf.format(new Date());
+    Location location;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -117,11 +117,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                location = location;
                 final String uid = user.getUid();
                 userData.put("email",user.getEmail());
                 userData.put("uid",user.getUid());
-                userData.put("location",location.toString().split(",")[0]);
-                locationXX = location.toString();
+                userData.put("longitude",location.getLatitude());
+                userData.put("longitude",location.getLongitude());
+             //   userData.put("location",location.toString().split(",")[0]);
+
 
 
 
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         emergencyModel.put("email",user.getEmail());
-        emergencyModel.put("gpsLast",locationXX.split(",")[0].toString());
+        emergencyModel.put("gpsLast",location);
         emergencyModel.put("time",currentDateandTime.toString());
 
         emergency.setOnClickListener(new View.OnClickListener() {

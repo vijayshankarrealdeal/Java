@@ -34,6 +34,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Dashboard extends AppCompatActivity implements FirestoreAdapter.OnListItemClick {
 
@@ -105,7 +108,11 @@ public class Dashboard extends AppCompatActivity implements FirestoreAdapter.OnL
     @Override
     public void onItemClick(DocumentSnapshot snapshot,int position) {
         //Pass video
-        startActivity(new Intent(getApplicationContext(),VideoPage.class));
+        String url = snapshot.getString("cloudStorageLink");
+
+        Intent i = new Intent(Dashboard.this,VideoPage.class);
+        i.putExtra("keyOfVideoUrl",url);
+        startActivity(i);
     }
 
     private  class AdminViewHolder extends  RecyclerView.ViewHolder {

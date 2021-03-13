@@ -4,7 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
+    android:background="#000000"
     tools:context=".VideoPage">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/movie_exo_player"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shutter_background_color="@color/black">
+
+    </com.google.android.exoplayer2.ui.PlayerView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
