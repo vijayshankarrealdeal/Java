@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,14 +47,35 @@ public class About extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         imageView = findViewById(R.id.showGraphImage);
         textView = findViewById(R.id.jkbdsjfdvshf);
-        firebaseFirestore.collection("crimeData").document("graph").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("crimeData").document("graph").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot snapshot) {
-                mediaUrL = snapshot.getString("imageUrl");
-                textView.setText(mediaUrL);
-                System.out.println(snapshot.getString("imageUrl"));
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    System.out.println(task.getResult().getString("imageUrl"));
+                    mediaUrL = task.getResult().getString("imageUrl");
+                    textView.setText(mediaUrL);
+                }
             }
         });
+
+
+
+
+
+
+
+
+
+
+//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot snapshot) {
+//                mediaUrL = snapshot.getString("imageUrl");
+//                textView.setText(mediaUrL);
+//                System.out.println(snapshot.getString("imageUrl"));
+//            }
+//        });
         Glide.with(this).load(mediaUrL).into(imageView);
         System.out.println(mediaUrL);
         ///Location
