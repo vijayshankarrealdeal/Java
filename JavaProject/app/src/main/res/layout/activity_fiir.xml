@@ -60,6 +60,17 @@
                 android:layout_marginRight="18dp"
                 android:hint="EmailAddress"></EditText>
             <EditText
+                android:id="@+id/yourAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="18dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="18dp"
+                android:hint="Your Address"></EditText>
+            <EditText
                 android:id="@+id/crimeOfPerson"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -108,7 +119,9 @@
                 android:layout_marginRight="18dp"
                 android:inputType="phone"
                 android:hint="Your Phone Number"></EditText>
+
             <Button
+                android:id="@+id/nextPageTO"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="18dp"
@@ -117,8 +130,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="18dp"
-                android:text="Next"
-></Button>
+                android:text="Next"></Button>
 
         </LinearLayout>
 
