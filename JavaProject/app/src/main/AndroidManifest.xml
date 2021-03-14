@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Fiir"></activity>
+        <activity android:name=".FirPage2"></activity>
+        <activity android:name=".Fiir" />
         <activity
             android:name=".VideoPage"
             android:screenOrientation="landscape" />
