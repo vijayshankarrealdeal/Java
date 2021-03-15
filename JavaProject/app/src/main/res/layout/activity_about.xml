@@ -2,46 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/email"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:contentDescription="ti"
     tools:context=".About">
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_navigation"
-        app:itemBackground="@color/black"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"
-        app:menu="@menu/menu_navigation"
         android:layout_alignParentBottom="true"
-        />
+        app:itemBackground="@color/black"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/menu_navigation" />
 
     <ImageView
-        android:background="@color/white"
-        android:id="@+id/showGraphImage"
+        android:id="@+id/thisWIkgraphShow"
         android:layout_width="match_parent"
-        android:layout_height="520dp"
+        android:layout_height="486dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:fitsSystemWindows="true"
-
-
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:layout_marginTop="311dp"
+        android:layout_marginBottom="71dp"
+        app:srcCompat="@drawable/unnamed" />
 
     <TextView
-        android:id="@+id/jkbdsjfdvshf"
-        android:layout_width="wrap_content"
+        android:id="@+id/nameOfUser"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="167dp"
-        android:layout_marginTop="193dp"
-        android:layout_marginEnd="188dp"
-        android:layout_marginBottom="657dp"
-        android:text="TextView" />
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="781dp"
+        android:text="loading....." />
+
+    <TextView
+        android:id="@+id/emialOfTHepersion"
+        android:layout_width="239dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="67dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginBottom="719dp"
+        android:text="loading...." />
+
+    <TextView
+        android:id="@+id/ingorAnbdhsf"
+        android:layout_width="243dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="646dp"
+        android:text="loading..." />
 
 </RelativeLayout>

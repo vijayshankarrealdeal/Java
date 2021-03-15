@@ -1,39 +1,40 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
+   import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.location.LocationListener;
+   import android.graphics.Bitmap;
+   import android.graphics.BitmapFactory;
+   import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
+   import android.net.Uri;
+   import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+   import com.google.android.gms.tasks.OnFailureListener;
+   import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+   import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Document;
-
-import java.util.ArrayList;
-import java.util.List;
+   import java.io.IOException;
+   import java.net.URL;
 
 public class About extends AppCompatActivity {
 
     FirebaseAuth auth;
     ImageView imageView;
-    TextView textView;
+    TextView name;
+    TextView email;
+    TextView information;
     LocationListener locationListener;
     LocationManager locationManager;
     String mediaUrL;
@@ -45,25 +46,36 @@ public class About extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        imageView = findViewById(R.id.showGraphImage);
-        textView = findViewById(R.id.jkbdsjfdvshf);
-        firebaseFirestore.collection("crimeData").document("graph").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        imageView =(ImageView) findViewById(R.id.thisWIkgraphShow);
+        name = (TextView) findViewById(R.id.nameOfUser);
+        email=(TextView)findViewById(R.id.emialOfTHepersion);
+        information = (TextView)findViewById(R.id.ingorAnbdhsf);
+
+
+        String url = "https://firebasestorage.googleapis.com/v0/b/women-e598c.appspot.com/o/download.png?alt=media&token=b45989ac-0d73-4e08-8ab8-96ee19e577b5";
+        Uri u = Uri.parse(url);
+        imageView.setImageURI(u);
+        System.out.println(user.getEmail());
+
+        firebaseFirestore.collection("Users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    System.out.println(task.getResult().getString("imageUrl"));
-                    mediaUrL = task.getResult().getString("imageUrl");
-                    textView.setText(mediaUrL);
-                }
+             task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                 @Override
+                 public void onSuccess(DocumentSnapshot snapshot) {
+                     email.setText(snapshot.getString("email"));
+                   //  name.setText(snapshot.getId());
+                     //information.setText(snapshot.getId());
+
+                 }
+             }).addOnFailureListener(new OnFailureListener() {
+                 @Override
+                 public void onFailure(@NonNull Exception e) {
+
+                 }
+             })   ;
             }
         });
-
-
-
-
-
-
 
 
 

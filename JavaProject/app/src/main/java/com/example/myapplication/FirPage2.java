@@ -36,12 +36,14 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class FirPage2 extends AppCompatActivity {
 
-    private static final int CAMERA_PERM_CODE =111 ;
-    ImageView selectedImage;
-    Button cameraBtn;
+    private static final int CAMERA_PERM_CODE = 111;
+    private ImageView photo;
+    private Button cameraBtn;
+    private Bitmap image;
     TextView addh;
     Button finalSubmit;
 
@@ -52,7 +54,7 @@ public class FirPage2 extends AppCompatActivity {
     String culpritDetails;
     String phoneNumber;
     String address;
-    Bitmap image;
+
     FirebaseAuth auth;
     FirebaseStorage Fstorage;
     StorageReference sref;
@@ -63,101 +65,62 @@ public class FirPage2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fir_page2);
 
-        nameOfPerson  = getIntent().getStringExtra("nameOfPerson");
-        emailOfPerson  = getIntent().getStringExtra("emailOfPerson");
-        crimeOfPerson  = getIntent().getStringExtra("crimeOfPerson");
-        culpitOfPerson  = getIntent().getStringExtra("culpitOfPerson");
-        culpritDetails  = getIntent().getStringExtra("culpritDetails");
+        nameOfPerson = getIntent().getStringExtra("nameOfPerson");
+        emailOfPerson = getIntent().getStringExtra("emailOfPerson");
+        crimeOfPerson = getIntent().getStringExtra("crimeOfPerson");
+        culpitOfPerson = getIntent().getStringExtra("culpitOfPerson");
+        culpritDetails = getIntent().getStringExtra("culpritDetails");
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         address = getIntent().getStringExtra("address");
 
 
-        selectedImage = findViewById(R.id.imageIdOfPerson);
+        photo = findViewById(R.id.imageIdOfPerson);
         cameraBtn = findViewById(R.id.openCamera);
         addh = findViewById(R.id.AddharCardNumber);
         finalSubmit = findViewById(R.id.SubmitButtonAllThings);
         Fstorage = FirebaseStorage.getInstance();
-        auth  = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        sref = Fstorage.getReference();
-        HashMap<String,String> hashMap = new HashMap<>();
-        StorageReference imagesRef = sref.child("images");
-        Bitmap bitmap = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
+        HashMap<String, String> hashMap = new HashMap<>();
+
         FirebaseUser user = auth.getCurrentUser();
-        UploadTask uploadTask = sref.child("hello").child(user.getUid()).putBytes(data);
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                askCameraPermission();
+                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera, 0);
             }
         });
         finalSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                final String idImage  = UUID.randomUUID().toString();
+                StorageReference reference = Fstorage.getReference().child("image"+idImage);
+                byte[] b = stream.toByteArray();
+                reference.putBytes(b).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String url = taskSnapshot.getStorage().getDownloadUrl().toString();
-                        hashMap.put("url",url);
-                        firebaseFirestore.collection("Users").document(user.getUid())
-                                .collection("ComplainsFir").document().set(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onSuccess(Void aVoid) {
-                            System.out.println("DOne");
+                            public void onSuccess(Uri uri) {
+                                Uri url = uri;
+                               System.out.println(uri);
                             }
                         });
-
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
                     }
                 });
-
-
             }
         });
-    }
 
-    private void askCameraPermission() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
 
-        {
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},CAMERA_PERM_CODE);
-        }else{
-            openCamera();
-        }
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[]permission,@NonNull int[] grantResults){
-        if(requestCode == CAMERA_PERM_CODE)
-        {
-            if(grantResults.length <0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
-                openCamera();
-            }else{
-                Toast.makeText(this,"Camera Permission is Requird",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    private  void openCamera()
-    {
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(camera,102);
-    }
-
-    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == 102)
-        {
-            image =(Bitmap) data.getExtras().get("data");
-            selectedImage.setImageBitmap(image);
-        }
+        super.onActivityResult(requestCode, resultCode, data);
+
+        image = ((BitmapDrawable) data.getExtras().get("data")).getBitmap();
+        photo.setImageBitmap(image);
     }
 }
