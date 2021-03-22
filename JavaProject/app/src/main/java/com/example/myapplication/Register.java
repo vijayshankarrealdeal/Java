@@ -1,3 +1,5 @@
+//Adding Register page
+
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
