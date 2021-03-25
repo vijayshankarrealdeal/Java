@@ -27,6 +27,8 @@ public class FirestoreAdapter extends FirestorePagingAdapter<AdminModel,Firestor
     @Override
     protected void onBindViewHolder(@NonNull AdminViewHolder holder, int position, @NonNull AdminModel model) {
         holder.textView.setText(model.getTitle());
+
+
     }
 
     @NonNull
