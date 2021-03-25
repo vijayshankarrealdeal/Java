@@ -2,11 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/email"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:contentDescription="ti"
     tools:context=".About">
 
 
@@ -21,51 +19,42 @@
         app:menu="@menu/menu_navigation" />
 
     <ImageView
-        android:id="@+id/thisWIkgraphShow"
+        android:id="@+id/graphXX"
         android:layout_width="match_parent"
-        android:layout_height="486dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="417dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="311dp"
-        android:layout_marginBottom="71dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="55dp"
+        android:scaleType="centerCrop"
         app:srcCompat="@drawable/unnamed" />
 
     <TextView
-        android:id="@+id/nameOfUser"
-        android:layout_width="match_parent"
+        android:id="@+id/showLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/graphXX"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="39dp"
+        android:layout_marginEnd="316dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/showEmailXX"
+        android:layout_width="289dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="71dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="781dp"
-        android:text="loading....." />
-
-    <TextView
-        android:id="@+id/emialOfTHepersion"
-        android:layout_width="239dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="67dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="719dp"
-        android:text="loading...." />
-
-    <TextView
-        android:id="@+id/ingorAnbdhsf"
-        android:layout_width="243dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="68dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="646dp"
-        android:text="loading..." />
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="85dp"
+        android:layout_marginBottom="804dp"
+        android:text="Loading Email" />
 
 </RelativeLayout>

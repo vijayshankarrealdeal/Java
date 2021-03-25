@@ -2,95 +2,150 @@ package com.example.myapplication;
 
    import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+   import androidx.core.app.ActivityCompat;
+   import androidx.core.content.ContextCompat;
 
-import android.content.Intent;
-   import android.graphics.Bitmap;
-   import android.graphics.BitmapFactory;
+   import android.Manifest;
+   import android.content.Context;
+   import android.content.Intent;
+   import android.content.pm.PackageManager;
+   import android.location.Location;
    import android.location.LocationListener;
-import android.location.LocationManager;
+   import android.location.LocationManager;
    import android.net.Uri;
    import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TextView;
+   import android.widget.TextView;
+   import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-   import com.google.android.gms.tasks.OnFailureListener;
+   import com.google.android.gms.tasks.OnCompleteListener;
    import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+   import com.google.android.gms.tasks.Task;
+   import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
    import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+   import com.google.firebase.firestore.FirebaseFirestore;
+   import com.squareup.picasso.Picasso;
 
-   import java.io.IOException;
-   import java.net.URL;
+   import java.text.DecimalFormat;
+
 
 public class About extends AppCompatActivity {
+    LocationManager locationManager;
+    LocationListener locationListener;
+    ImageView graphX;
+    TextView locationJhol;
+    TextView showEmail;
+
 
     FirebaseAuth auth;
-    ImageView imageView;
-    TextView name;
-    TextView email;
-    TextView information;
-    LocationListener locationListener;
-    LocationManager locationManager;
-    String mediaUrL;
     private  FirebaseFirestore firebaseFirestore;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+                // Check
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        graphX = findViewById(R.id.graphXX);
+        showEmail = findViewById(R.id.showEmailXX);
+        locationJhol = findViewById(R.id.showLocation);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        imageView =(ImageView) findViewById(R.id.thisWIkgraphShow);
-        name = (TextView) findViewById(R.id.nameOfUser);
-        email=(TextView)findViewById(R.id.emialOfTHepersion);
-        information = (TextView)findViewById(R.id.ingorAnbdhsf);
+
+        locationJhol.append("hello");
 
 
-        String url = "https://firebasestorage.googleapis.com/v0/b/women-e598c.appspot.com/o/download.png?alt=media&token=b45989ac-0d73-4e08-8ab8-96ee19e577b5";
-        Uri u = Uri.parse(url);
-        imageView.setImageURI(u);
-        System.out.println(user.getEmail());
 
-        firebaseFirestore.collection("Users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+
+
+
+
+
+
+
+        //Image
+        firebaseFirestore.collection("crimeData").document("graph").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-             task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                 @Override
-                 public void onSuccess(DocumentSnapshot snapshot) {
-                     email.setText(snapshot.getString("email"));
-                   //  name.setText(snapshot.getId());
-                     //information.setText(snapshot.getId());
-
-                 }
-             }).addOnFailureListener(new OnFailureListener() {
-                 @Override
-                 public void onFailure(@NonNull Exception e) {
-
-                 }
-             })   ;
+            public void onSuccess(DocumentSnapshot snapshot) {
+                Picasso
+                        .get()
+                        .load(snapshot.getString("imageUrl"))
+                        .into(graphX);
             }
         });
 
 
+        ///locationOncreate
+        locationListener  = new LocationListener()
+        {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                System.out.println(location.getLatitude());
+                locationJhol.setText(Double.toString(location.getLatitude()));
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(@NonNull String provider) {
+
+            }
+        };
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            // Ask Permission
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+        }
 
 
-//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot snapshot) {
-//                mediaUrL = snapshot.getString("imageUrl");
-//                textView.setText(mediaUrL);
-//                System.out.println(snapshot.getString("imageUrl"));
-//            }
-//        });
-        Glide.with(this).load(mediaUrL).into(imageView);
-        System.out.println(mediaUrL);
-        ///Location
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -118,6 +173,5 @@ public class About extends AppCompatActivity {
             }
         });
     }
-
 
 }
