@@ -1,3 +1,5 @@
+//Adding login, Register and forgot Password function
+
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
