@@ -11,7 +11,7 @@ db = firestore.client()
 #discrip = ""
 
 
-title = "Interview1"
+title = "Self Motivation"
 cloudStorageLink = "https://firebasestorage.googleapis.com/v0/b/women-e598c.appspot.com/o/y2mate.com%20-%20Accenture%20CEOs%20Advice%20To%20Women%20Stand%20Out%20%20Forbes_480p.mp4?alt=media&token=af72d803-a096-4490-9814-0f90b44a80b4"
 name = "Forbes"
 source = "YouTube"
