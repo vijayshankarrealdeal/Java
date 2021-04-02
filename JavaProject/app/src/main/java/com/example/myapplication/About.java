@@ -48,7 +48,7 @@ public class About extends AppCompatActivity implements LocationListener {
         {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!=
                     PackageManager.PERMISSION_GRANTED){
-                // Check
+                // Check Location
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,5000,100,locationListener);
             }
@@ -65,7 +65,7 @@ public class About extends AppCompatActivity implements LocationListener {
         firebaseFirestore = FirebaseFirestore.getInstance();
         editLocation = findViewById(R.id.editLocation);
 
-        //Image
+        //Image of Graph
         firebaseFirestore.collection("crimeData").document("graph").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot snapshot) {
