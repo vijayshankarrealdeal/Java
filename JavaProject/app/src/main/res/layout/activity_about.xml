@@ -9,39 +9,40 @@
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_navigation"
-        app:itemBackground="@color/black"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"
-        app:menu="@menu/menu_navigation"
         android:layout_alignParentBottom="true"
-        />
+        app:itemBackground="@color/black"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/menu_navigation" />
 
     <ImageView
-        android:background="@color/white"
-        android:id="@+id/showGraphImage"
+        android:id="@+id/graphXX"
         android:layout_width="match_parent"
-        android:layout_height="520dp"
+        android:layout_height="473dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:fitsSystemWindows="true"
-
-
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="50dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/unnamed" />
 
     <TextView
-        android:id="@+id/jkbdsjfdvshf"
+        android:id="@+id/editLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="167dp"
-        android:layout_marginTop="193dp"
-        android:layout_marginEnd="188dp"
-        android:layout_marginBottom="657dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="59dp"
+        android:layout_marginEnd="291dp"
+        android:layout_marginBottom="791dp"
         android:text="TextView" />
 
 </RelativeLayout>

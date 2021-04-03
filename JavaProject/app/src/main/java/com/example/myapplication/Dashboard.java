@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +55,8 @@ public class Dashboard extends AppCompatActivity implements FirestoreAdapter.OnL
         Query query =  cloudStore.collection("adminContent").document("Videos")
                 .collection("data");
         PagedList.Config config = new PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(6).build();
+        mFrecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),
+                DividerItemDecoration.VERTICAL));
 
 
         FirestorePagingOptions<AdminModel> options = new

@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
     Button logout;
     Button emergency;
+    Button firButton;
+
     LocationListener locationListener;
     TextView verifyMessage;
     Button verifyEmail;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        firButton = findViewById(R.id.FirFire);
         emergency = findViewById(R.id.sosEmergency);
         verifyMessage = findViewById(R.id.verifyTextView);
         verifyEmail = findViewById(R.id.verifyButtom);
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                System.out.println(location);
                 documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot snapshot) {
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         previousLong = snapshot.getString("longitude");
                     }
                 });
-                location = location;
+
                 DecimalFormat df = new DecimalFormat("#.###");
                 Double logitudeX = new Double(location.getLongitude()) ;
                 Double latitudeX = new Double(location.getLongitude()) ;
@@ -218,6 +221,12 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this,"Alert Failed"+e.getMessage(),Toast.LENGTH_SHORT).show();
                             }
                         });
+            }
+        });
+        firButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Fiir.class));
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:background="@drawable/vcvc"
+    android:background="@drawable/lkhdfjkhskfkjkdjkbvsdu"
     tools:context=".MainActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -60,6 +60,22 @@
         android:text="Logout" />
 
     <Button
+        android:id="@+id/FirFire"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="174dp"
+        android:layout_marginEnd="243dp"
+        android:layout_marginBottom="492dp"
+        android:background="@drawable/rounded_corners"
+        android:text="Fir"
+        android:textSize="40sp" />
+
+    <Button
         android:id="@+id/sosEmergency"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -72,7 +88,6 @@
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="125dp"
         android:background="@drawable/rounded_corners"
-
         android:text="SOS"
         android:textSize="40sp" />
 

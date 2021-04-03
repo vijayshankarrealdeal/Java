@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sdsdsd"
-    tools:context=".Login" >
+    android:background="@drawable/ajfjkabsjkbaskjfbakjsbf"
+    tools:context=".Login">
 
     <EditText
         android:id="@+id/PasswordLogin"
