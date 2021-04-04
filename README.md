@@ -19,3 +19,19 @@ The idea behind this android app is to ensure women safety and enable them to be
 1.Login
 
 ![](https://github.com/vijayshankarrealdeal/Java/blob/main/Images/Login.png)
+
+2. Register
+
+![](https://github.com/vijayshankarrealdeal/Java/blob/main/Images/Register.png)
+
+3. FIR and SOS 
+
+![](https://github.com/vijayshankarrealdeal/Java/blob/main/Images/FIR%2BSOS.png)
+
+4. Video
+
+![](https://github.com/vijayshankarrealdeal/Java/blob/main/Images/Video%20(2).png)
+
+5. Map
+
+![](https://github.com/vijayshankarrealdeal/Java/blob/main/Images/Map.png)
